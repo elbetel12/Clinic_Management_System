@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import { UserRole } from './user.type';
-import joi from 'joi';
 
 const userScema = new mongoose.Schema({
     name:{
