@@ -1,12 +1,18 @@
 export interface CreateDoctorInput  {
-    name:string;
-    specialization:string;
+    userId: string;
+    name: string;
+    email: string;
+    specialization: string;
 }
 
 export interface DoctorDocument {
-    _id:string;
-    name:string;
-    specialization:string;
-    createdAt:Date;
-    updatedAt:Date;
+    _id: string;
+    user: string;
+    name: string;
+    email: string;
+    specialization: string;
+    bio?: string;
+    experience?: number;
+    createdAt: Date;
+    updatedAt: Date;
 }
