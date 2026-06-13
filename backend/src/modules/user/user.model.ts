@@ -21,6 +21,10 @@ const userScema = new mongoose.Schema({
         type: String,
         trim: true,
         match: [/^[0-9]{9,15}$/, "Invalid phone number"]
+    },
+    avatar: {
+        type: String,
+        default: "https://api.dicebear.com/7.x/avataaars/svg?seed=Lucky"
     },          
     password:{  
         type:String,

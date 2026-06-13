@@ -1,22 +1,33 @@
-import { CreateUserInput } from '../user/user.type';
+import { CreateUserInput, UserRole } from '../user/user.type';
 import User from '../user/user.model';
 import bcrypt from 'bcrypt';
 import { generateToken } from '../../utils/jwt';
-import mongoose from 'mongoose';
+import { createDoctor } from '../doctor/doctor.service';
 
-export const registerUser = async (userData : CreateUserInput) =>{
-   const existingUser = await User.findOne({email:userData.email});
-   if(existingUser){
-    throw new Error('User with this email already exists');
-   }
-   const passwordHash = await bcrypt.hash(userData.password,10);
+export const registerUser = async (userData: CreateUserInput) => {
+    const existingUser = await User.findOne({ email: userData.email });
+    if (existingUser) {
+        throw new Error('User with this email already exists');
+    }
+    const passwordHash = await bcrypt.hash(userData.password, 10);
     const newUser = new User({
-        name:userData.name,
-        email:userData.email,
-        password:passwordHash,
-        role:userData.role
+        name: userData.name,
+        email: userData.email,
+        password: passwordHash,
+        role: userData.role
     })
     await newUser.save();
+
+    // If user is a doctor, create a Doctor profile
+    if (userData.role === UserRole.Doctor) {
+        await createDoctor({
+            userId: newUser._id.toString(),
+            name: newUser.name,
+            email: newUser.email,
+            specialization: userData.specialization || 'General Practice'
+        });
+    }
+
     return newUser;
 }
 

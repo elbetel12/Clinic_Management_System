@@ -40,11 +40,11 @@ export const createAppointment = async (appointmentData: CreateAppointmentInput)
 }
 
 export const getAppointments = async () => {
-    return await Appointment.find().populate('doctor').populate('patient');
+    return await Appointment.find().populate(['doctor', 'patient']);
 }   
 
 export const getAppointmentsByDoctor = async (doctorId: string) => {
-    return await Appointment.find({ doctor: doctorId }).populate('doctor').populate('patient');
+    return await Appointment.find({ doctor: doctorId }).populate(['doctor', 'patient']);
 }
 
 export const getAppointmentsByPatient = async (patientId: string) => {
