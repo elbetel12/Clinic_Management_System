@@ -21,13 +21,13 @@ const Toast: React.FC<ToastProps & { onClose: () => void }> = ({
   }, [onClose])
 
   const variants = {
-    default: "bg-white border-gray-200 text-gray-900",
+    default: "bg-white border-slate-200 text-slate-800",
     destructive: "bg-red-50 border-red-200 text-red-900",
     success: "bg-emerald-50 border-emerald-200 text-emerald-900",
   }
 
   const icons = {
-    default: <Info className="text-blue-500" size={20} />,
+    default: <Info className="text-sky-400" size={20} />,
     destructive: <AlertCircle className="text-red-500" size={20} />,
     success: <CheckCircle className="text-emerald-500" size={20} />,
   }

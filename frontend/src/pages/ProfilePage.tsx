@@ -94,7 +94,7 @@ const ProfilePage: React.FC = () => {
     return (
       <Layout>
         <div className="min-h-[60vh] flex items-center justify-center">
-          <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+          <Loader2 className="w-8 h-8 animate-spin text-sky-500" />
         </div>
       </Layout>
     );
@@ -104,18 +104,18 @@ const ProfilePage: React.FC = () => {
     <Layout>
       <div className="max-w-4xl mx-auto space-y-8 pb-12">
         <div className="flex flex-col gap-2">
-          <h1 className="text-3xl font-bold text-gray-900">Account Settings</h1>
-          <p className="text-gray-500">Manage your profile information and personalization preferences.</p>
+          <h1 className="text-3xl font-bold text-slate-800">Account Settings</h1>
+          <p className="text-slate-500">Manage your profile information and personalization preferences.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Avatar Section */}
           <Card className="border-0 shadow-sm bg-white overflow-hidden">
-            <div className="h-32 bg-gradient-to-r from-blue-600 to-indigo-700" />
+            <div className="h-32 bg-gradient-to-r from-sky-500 to-emerald-600" />
             <CardContent className="relative pt-0 px-8 pb-8">
               <div className="flex flex-col sm:flex-row items-end gap-6 -mt-12">
                 <div className="relative group">
-                  <div className="w-32 h-32 rounded-2xl border-4 border-white overflow-hidden bg-gray-100 shadow-xl">
+                  <div className="w-32 h-32 rounded-2xl border-4 border-white overflow-hidden bg-slate-100 shadow-xl">
                     <img 
                       src={formData.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(formData.name)}&background=0D8ABC&color=fff&size=128`} 
                       alt="Profile" 
@@ -127,9 +127,9 @@ const ProfilePage: React.FC = () => {
                   </div>
                 </div>
                 <div className="flex-1 pb-2">
-                  <h2 className="text-2xl font-bold text-gray-900">{formData.name}</h2>
-                  <p className="text-gray-500 capitalize font-medium flex items-center gap-2">
-                    <Award size={16} className="text-blue-600" />
+                  <h2 className="text-2xl font-bold text-slate-800">{formData.name}</h2>
+                  <p className="text-slate-500 capitalize font-medium flex items-center gap-2">
+                    <Award size={16} className="text-sky-500" />
                     {user?.role} Profile
                   </p>
                 </div>
@@ -137,9 +137,9 @@ const ProfilePage: React.FC = () => {
 
               <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-700">Avatar URL</label>
+                  <label className="text-sm font-semibold text-slate-700">Avatar URL</label>
                   <div className="relative">
-                    <Camera className="absolute left-3 top-3 text-gray-400" size={18} />
+                    <Camera className="absolute left-3 top-3 text-slate-400" size={18} />
                     <Input 
                       name="avatar"
                       placeholder="https://images.unsplash.com/photo-..." 
@@ -148,7 +148,7 @@ const ProfilePage: React.FC = () => {
                       onChange={handleChange}
                     />
                   </div>
-                  <p className="text-[10px] text-gray-400">Paste an image URL for your profile picture.</p>
+                  <p className="text-[10px] text-slate-400">Paste an image URL for your profile picture.</p>
                 </div>
               </div>
             </CardContent>
@@ -160,25 +160,25 @@ const ProfilePage: React.FC = () => {
               <Card>
                 <CardHeader>
                   <CardTitle className="text-lg flex items-center gap-2">
-                    <User size={18} className="text-blue-600" />
+                    <User size={18} className="text-sky-500" />
                     Personal Information
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">Full Name</label>
+                      <label className="text-sm font-medium text-slate-700">Full Name</label>
                       <Input name="name" value={formData.name} onChange={handleChange} required />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">Email Address</label>
-                      <Input value={formData.email} disabled className="bg-gray-50 text-gray-500" />
+                      <label className="text-sm font-medium text-slate-700">Email Address</label>
+                      <Input value={formData.email} disabled className="bg-slate-50 text-slate-500" />
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-gray-700">Phone Number</label>
+                    <label className="text-sm font-medium text-slate-700">Phone Number</label>
                     <div className="relative">
-                      <Phone className="absolute left-3 top-3 text-gray-400" size={18} />
+                      <Phone className="absolute left-3 top-3 text-slate-400" size={18} />
                       <Input name="phone" className="pl-10" value={formData.phone} onChange={handleChange} placeholder="0911..." />
                     </div>
                   </div>
@@ -189,26 +189,26 @@ const ProfilePage: React.FC = () => {
                 <Card>
                   <CardHeader>
                     <CardTitle className="text-lg flex items-center gap-2">
-                      <Briefcase size={18} className="text-blue-600" />
+                      <Briefcase size={18} className="text-sky-500" />
                       Professional Profile
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-700">Specialization</label>
+                        <label className="text-sm font-medium text-slate-700">Specialization</label>
                         <Input name="specialization" value={formData.specialization} onChange={handleChange} />
                       </div>
                       <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-700">Years of Experience</label>
+                        <label className="text-sm font-medium text-slate-700">Years of Experience</label>
                         <Input type="number" name="experience" value={formData.experience} onChange={handleChange} />
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">Professional Bio</label>
+                      <label className="text-sm font-medium text-slate-700">Professional Bio</label>
                       <textarea 
                         name="bio"
-                        className="w-full min-h-[120px] rounded-lg border border-gray-200 p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                        className="w-full min-h-[120px] rounded-lg border border-slate-200 p-3 text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 transition-all"
                         placeholder="Tell patients about your clinical background and approach..."
                         value={formData.bio}
                         onChange={handleChange}
@@ -221,13 +221,13 @@ const ProfilePage: React.FC = () => {
 
             {/* Sidebar Actions */}
             <div className="space-y-6">
-              <Card className="bg-blue-50/50 border-blue-100">
+              <Card className="bg-sky-50/50 border-sky-100">
                 <CardHeader>
                   <CardTitle className="text-base">Save Changes</CardTitle>
                   <CardDescription>Ensure your information is up to date for better communication.</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700" disabled={isLoading}>
+                  <Button type="submit" className="w-full bg-sky-500 hover:bg-sky-600" disabled={isLoading}>
                     {isLoading ? (
                       <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Saving...</>
                     ) : (
