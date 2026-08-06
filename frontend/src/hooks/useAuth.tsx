@@ -1,16 +1,18 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import * as authService from '../services/authService';
 import { User, LoginInput, RegisterInput } from '../types';
+import { socket } from "@/lib/socket"
+import { Socket } from 'socket.io-client';
 
-// 1. Define the "Shape" of our Auth data
 interface AuthContextType {
-  user: User | null;         // The logged-in user object or null
-  token: string | null;       // The JWT token string or null
-  isAuthenticated: boolean;   // Quick helper to check if logged in
-  isLoading: boolean;         // True while we are checking localStorage on boot
+  user: User | null;         
+  token: string | null;    
+  isAuthenticated: boolean
+  isLoading: boolean;        
   login: (data: LoginInput) => Promise<void>;
   register: (data: RegisterInput) => Promise<void>;
   logout: () => void;
+  socket:Socket | null;
 }
 
 // 2. Create the actual Context object
@@ -40,6 +42,34 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     setIsLoading(false); // Done checking
   }, []);
+
+  //socket connection
+  useEffect(() => {
+    if (user) {
+      socket.connect()
+      socket.on('connect', () => {
+        socket.emit('chat message', `Hello it's ${user?.id}`);
+        socket.emit('identify', user?.id);
+      });
+    }else {
+      socket.disconnect()
+      console.log('disconnected')
+    }
+
+    // if (socket.connected) {
+    //   socket.on('disconnect', () => {
+    //     console.log('❌ Disconnected from Socket Server');
+    //   });
+    // }
+
+
+    // 5. Cleanup listeners when the component unmounts
+    return () => {
+      socket.off('connect');
+      socket.off('chat message');
+      socket.off('disconnect');
+    };
+  }, [user]);
 
   // 5. Login Function
   const login = async (data: LoginInput) => {
@@ -79,6 +109,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     login,
     register,
     logout,
+    socket
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
