@@ -10,6 +10,7 @@ export const createAppointmentHandler = async (req:Request,res:Response) => {
             time:req.body.time
         });
         res.status(201).json(appointment);
+        
     } catch (error: Error | unknown) {
         res.status(500).json({ message: error instanceof Error ? error.message : 'Internal server error' });
     }  
@@ -26,7 +27,7 @@ export const getAppointmentsHandler = async (req:Request,res:Response) => {
 
 export const getAppointmentsByDoctorHandler = async (req:Request,res:Response) => {
     try {
-        const doctorId = req.params.doctorId as string;  // Type assertion
+        const doctorId = req.params.doctorId as string;
         const appointments = await getAppointmentsByDoctor(doctorId);
         res.status(200).json(appointments);
     } catch (error: Error | unknown) {
