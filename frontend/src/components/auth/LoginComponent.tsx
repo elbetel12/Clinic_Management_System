@@ -72,6 +72,36 @@ function LoginComponent() {
           </div>
         )}
 
+        {/* Demo Credentials Quick Fill */}
+        <div style={{ marginTop: '16px', padding: '12px 14px', background: '#f8fafc', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+          <div style={{ fontSize: '10px', fontWeight: 800, color: '#64748b', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.05em', textAlign: 'center' }}>
+            ⚡ Quick Demo Accounts
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', justifyContent: 'center' }}>
+            <button
+              type="button"
+              onClick={() => { setEmail('admin@novacare.com'); setPassword('Password123!'); }}
+              style={{ fontSize: '11px', fontWeight: 600, padding: '5px 10px', borderRadius: '10px', background: '#e0f2fe', color: '#0369a1', border: '1px solid #bae6fd', cursor: 'pointer', transition: 'all 0.15s' }}
+            >
+              Admin
+            </button>
+            <button
+              type="button"
+              onClick={() => { setEmail('dr.abebe@novacare.com'); setPassword('Password123!'); }}
+              style={{ fontSize: '11px', fontWeight: 600, padding: '5px 10px', borderRadius: '10px', background: '#dcfce7', color: '#15803d', border: '1px solid #bbf7d0', cursor: 'pointer', transition: 'all 0.15s' }}
+            >
+              Doctor
+            </button>
+            <button
+              type="button"
+              onClick={() => { setEmail('kebede.t@gmail.com'); setPassword('Password123!'); }}
+              style={{ fontSize: '11px', fontWeight: 600, padding: '5px 10px', borderRadius: '10px', background: '#fef3c7', color: '#b45309', border: '1px solid #fde68a', cursor: 'pointer', transition: 'all 0.15s' }}
+            >
+              Patient
+            </button>
+          </div>
+        </div>
+
         {/* Form */}
         <form onSubmit={handleSubmit} style={{ marginTop: '20px' }}>
           <input
