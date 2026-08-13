@@ -68,7 +68,7 @@ function RegisterComponent() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label htmlFor="name" className="text-sm font-medium text-slate-700">Full Name</label>
-                <Input id="name" name="name" autoComplete="name" placeholder="John Doe" onChange={handleChange} required />
+                <Input id="name" name="name" autoComplete="name" placeholder="Kebede Tessema" onChange={handleChange} required />
               </div>
               <div className="space-y-2">
                 <label htmlFor="phone" className="text-sm font-medium text-slate-700">Phone</label>
@@ -78,7 +78,7 @@ function RegisterComponent() {
             
             <div className="space-y-2">
               <label htmlFor="email" className="text-sm font-medium text-slate-700">Email Address</label>
-              <Input id="email" name="email" type="email" autoComplete="email" placeholder="john@example.com" onChange={handleChange} required />
+              <Input id="email" name="email" type="email" autoComplete="email" placeholder="kebede@example.com" onChange={handleChange} required />
             </div>
             
             <div className="space-y-2">

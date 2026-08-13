@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useAppointments } from '../hooks/useAppointments';
 import { useDoctors } from '../hooks/useDoctors';
@@ -6,28 +6,87 @@ import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card'
 import { Button } from '../components/ui/button';
 import { Link } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
-import { UserPlus, PlusCircle, Stethoscope, Mail, Calendar } from 'lucide-react';
+import { UserPlus, PlusCircle, Stethoscope, Mail, Calendar, CheckCircle2, XCircle } from 'lucide-react';
 import AddDoctorModal from '../components/doctors/AddDoctorModal';
-
+import { Appointment } from '@/types';
 
 const DashboardPage = () => {
   const { user } = useAuth();
-  const { appointments, isLoading: isAppointmentsLoading, error: appointmentError } = useAppointments();
+  const { appointments, isLoading: isAppointmentsLoading, error: appointmentError, updateStatus } = useAppointments();
   const { doctors, loading: isDoctorsLoading, fetchDoctors } = useDoctors();
   const [isAddDoctorOpen, setIsAddDoctorOpen] = useState(false);
+  const [updatingId, setUpdatingId] = useState<string | null>(null);
 
   // Helper to color the status badges
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'booked': return 'bg-sky-100 text-sky-600 border-sky-200';
+      case 'booked':    return 'bg-sky-100 text-sky-600 border-sky-200';
       case 'completed': return 'bg-emerald-100 text-emerald-700 border-emerald-200';
       case 'cancelled': return 'bg-red-100 text-red-700 border-red-200';
-      default: return 'bg-slate-100 text-slate-700';
+      default:          return 'bg-slate-100 text-slate-700';
     }
   };
 
- 
+  const handleStatusChange = async (appointmentId: string, newStatus: 'cancelled' | 'completed') => {
+    const label = newStatus === 'completed' ? 'mark as completed' : 'cancel';
+    if (!window.confirm(`Are you sure you want to ${label} this appointment?`)) return;
+    setUpdatingId(appointmentId);
+    await updateStatus(appointmentId, newStatus);
+    setUpdatingId(null);
+  };
 
+  const renderActions = (apt: Appointment) => {
+    // Only booked appointments can be transitioned
+    if (apt.status !== 'booked') {
+      return <span className="text-xs text-slate-400 italic">—</span>;
+    }
+
+    const isUpdating = updatingId === apt._id;
+
+    if (user?.role === 'patient') {
+      return (
+        <Button
+          variant="ghost"
+          size="sm"
+          disabled={isUpdating}
+          onClick={() => handleStatusChange(apt._id, 'cancelled')}
+          className="text-red-500 hover:text-red-600 hover:bg-red-50 gap-1.5 disabled:opacity-40"
+        >
+          <XCircle size={14} />
+          {isUpdating ? 'Cancelling…' : 'Cancel'}
+        </Button>
+      );
+    }
+
+    if (user?.role === 'doctor' || user?.role === 'admin') {
+      return (
+        <div className="flex gap-2 justify-end">
+          <Button
+            variant="ghost"
+            size="sm"
+            disabled={isUpdating}
+            onClick={() => handleStatusChange(apt._id, 'completed')}
+            className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 gap-1.5 disabled:opacity-40"
+          >
+            <CheckCircle2 size={14} />
+            {isUpdating ? '…' : 'Complete'}
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            disabled={isUpdating}
+            onClick={() => handleStatusChange(apt._id, 'cancelled')}
+            className="text-red-500 hover:text-red-600 hover:bg-red-50 gap-1.5 disabled:opacity-40"
+          >
+            <XCircle size={14} />
+            {isUpdating ? '…' : 'Cancel'}
+          </Button>
+        </div>
+      );
+    }
+
+    return null;
+  };
 
   return (
     <Layout>
@@ -38,10 +97,10 @@ const DashboardPage = () => {
             <h1 className="text-3xl font-bold text-slate-800">Welcome, {user?.name}</h1>
             <p className="text-slate-500 mt-1">Here is what is happening at NovaCare Clinic today.</p>
           </div>
-          
+
           <div className="flex gap-3">
             {user?.role === 'admin' && (
-              <Button 
+              <Button
                 onClick={() => setIsAddDoctorOpen(true)}
                 className="bg-sky-500 hover:bg-sky-600 text-white shadow-lg shadow-sky-100 gap-2"
               >
@@ -75,7 +134,7 @@ const DashboardPage = () => {
               </div>
             </CardContent>
           </Card>
-          
+
           {user?.role === 'admin' && (
             <Card className="border-0 shadow-sm">
               <CardHeader className="pb-2">
@@ -119,7 +178,7 @@ const DashboardPage = () => {
                 <table className="w-full text-left border-collapse">
                   <thead className="bg-slate-50 text-slate-600 text-xs uppercase font-semibold">
                     <tr>
-                      <th className="px-6 py-4">Date & Time</th>
+                      <th className="px-6 py-4">Date &amp; Time</th>
                       <th className="px-6 py-4">{user?.role === 'patient' ? 'Doctor' : 'Patient'}</th>
                       <th className="px-6 py-4">Status</th>
                       <th className="px-6 py-4 text-right">Actions</th>
@@ -127,7 +186,10 @@ const DashboardPage = () => {
                   </thead>
                   <tbody className="divide-y divide-slate-100 bg-white">
                     {appointments?.map((apt) => (
-                      <tr key={apt._id} className="hover:bg-slate-50/50 transition-colors">
+                      <tr
+                        key={apt._id}
+                        className={`hover:bg-slate-50/50 transition-colors ${updatingId === apt._id ? 'opacity-60' : ''}`}
+                      >
                         <td className="px-6 py-4">
                           <div className="font-medium text-slate-800">{new Date(apt.date).toLocaleDateString()}</div>
                           <div className="text-sm text-slate-500">{apt.time}</div>
@@ -141,9 +203,7 @@ const DashboardPage = () => {
                           </span>
                         </td>
                         <td className="px-6 py-4 text-right">
-                          <Button variant="ghost" size="sm" className="text-sky-500 hover:text-sky-600 hover:bg-sky-50">
-                            Details
-                          </Button>
+                          {renderActions(apt)}
                         </td>
                       </tr>
                     ))}
@@ -210,11 +270,11 @@ const DashboardPage = () => {
         )}
       </div>
 
-      <AddDoctorModal 
-        isOpen={isAddDoctorOpen} 
+      <AddDoctorModal
+        isOpen={isAddDoctorOpen}
         onClose={() => setIsAddDoctorOpen(false)}
         onSuccess={() => {
-          fetchDoctors(); // Refresh list
+          fetchDoctors();
           alert("Doctor account created successfully!");
         }}
       />
@@ -223,4 +283,3 @@ const DashboardPage = () => {
 };
 
 export default DashboardPage;
-

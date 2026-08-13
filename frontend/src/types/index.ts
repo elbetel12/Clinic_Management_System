@@ -127,13 +127,15 @@ export interface CreateAppointmentInput {
   time: string; // e.g. "14:30"
 }
 
-export type NotificationType = "success" |"error" | "info"
-
+export type NotificationType = "success" | "error" | "info" | "warning";
 
 export interface Notification {
-  id:number,
-  title:string,
-  time:string,
-  isRead:boolean,
-  type?:NotificationType
+  id?: number | string;
+  _id?: string;
+  title: string;
+  message?: string;
+  time?: string;
+  createdAt?: string;
+  isRead: boolean;
+  type?: NotificationType;
 } 
