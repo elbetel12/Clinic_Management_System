@@ -45,30 +45,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   //socket connection
   useEffect(() => {
-    if (user) {
-      socket.connect()
-      socket.on('connect', () => {
-        socket.emit('chat message', `Hello it's ${user?.id}`);
-        socket.emit('identify', user?.id);
-      });
-    }else {
-      socket.disconnect()
-      console.log('disconnected')
+    if (user?.id) {
+      if (!socket.connected) {
+        socket.connect();
+      } else {
+        socket.emit('identify', user.id);
+      }
+
+      const handleConnect = () => { 
+        // here we send the id to the server to identify the user
+        socket.emit('identify', user.id); 
+      };
+
+      socket.on('connect', handleConnect);
+
+      return () => {
+        socket.off('connect', handleConnect);
+      };
+    } else {
+      if (socket.connected) {
+        socket.disconnect();
+      }
     }
-
-    // if (socket.connected) {
-    //   socket.on('disconnect', () => {
-    //     console.log('❌ Disconnected from Socket Server');
-    //   });
-    // }
-
-
-    // 5. Cleanup listeners when the component unmounts
-    return () => {
-      socket.off('connect');
-      socket.off('chat message');
-      socket.off('disconnect');
-    };
   }, [user]);
 
   // 5. Login Function
