@@ -20,3 +20,8 @@ export const getAppointmentsByPatient = async (patientId: string): Promise<Appoi
   const response = await api.get(`/appointments/patient/${patientId}`);
   return response.data;
 };
+
+export const updateAppointmentStatus = async (appointmentId: string, status: 'booked' | 'cancelled' | 'completed'): Promise<Appointment> => {
+  const response = await api.patch(`/appointments/${appointmentId}/status`, { status });
+  return response.data;
+};
