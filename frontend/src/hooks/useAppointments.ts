@@ -55,11 +55,26 @@ export const useAppointments = () =>{
     }
   }
 
+  const updateStatus = async (appointmentId: string, status: 'booked' | 'cancelled' | 'completed') => {
+    // Optimistic update: immediately reflect the change in the UI
+    setAppointments(prev =>
+      prev?.map(apt => apt._id === appointmentId ? { ...apt, status } : apt)
+    );
+    try {
+      await appointmentService.updateAppointmentStatus(appointmentId, status);
+    } catch (error: any) {
+      setError(error.message || 'Failed to update appointment status');
+      // Revert by re-fetching the real server state
+      fetchAppointments();
+    }
+  };
+
   return {
     appointments,
     isLoading,
     error,
-    refresh:fetchAppointments,
-    bookAppointment
+    refresh: fetchAppointments,
+    bookAppointment,
+    updateStatus,
   }
  }

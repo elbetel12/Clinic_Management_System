@@ -1,16 +1,18 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import * as authService from '../services/authService';
 import { User, LoginInput, RegisterInput } from '../types';
+import { socket } from "@/lib/socket"
+import { Socket } from 'socket.io-client';
 
-// 1. Define the "Shape" of our Auth data
 interface AuthContextType {
-  user: User | null;         // The logged-in user object or null
-  token: string | null;       // The JWT token string or null
-  isAuthenticated: boolean;   // Quick helper to check if logged in
-  isLoading: boolean;         // True while we are checking localStorage on boot
+  user: User | null;         
+  token: string | null;    
+  isAuthenticated: boolean
+  isLoading: boolean;        
   login: (data: LoginInput) => Promise<void>;
   register: (data: RegisterInput) => Promise<void>;
   logout: () => void;
+  socket:Socket | null;
 }
 
 // 2. Create the actual Context object
@@ -40,6 +42,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     setIsLoading(false); // Done checking
   }, []);
+
+  //socket connection
+  useEffect(() => {
+    if (user?.id) {
+      if (!socket.connected) {
+        socket.connect();
+      } else {
+        socket.emit('identify', user.id);
+      }
+
+      const handleConnect = () => { 
+        // here we send the id to the server to identify the user
+        socket.emit('identify', user.id); 
+      };
+
+      socket.on('connect', handleConnect);
+
+      return () => {
+        socket.off('connect', handleConnect);
+      };
+    } else {
+      if (socket.connected) {
+        socket.disconnect();
+      }
+    }
+  }, [user]);
 
   // 5. Login Function
   const login = async (data: LoginInput) => {
@@ -79,6 +107,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     login,
     register,
     logout,
+    socket
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

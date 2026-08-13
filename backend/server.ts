@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import { connectToMongoDB } from './src/config/mongodb';
-import app from './src/app';
+import {server} from "./src/app"
 dotenv.config();
 
 
@@ -8,7 +8,8 @@ const startserver = async () => {
   try {
     await connectToMongoDB();
     const PORT = process.env.PORT || 3000;
-    app.listen(PORT, () => {
+    
+    server.listen(PORT, () => {
       console.log(`Express server running at http://localhost:${PORT}`);
     });
   } catch (error : Error | unknown) {

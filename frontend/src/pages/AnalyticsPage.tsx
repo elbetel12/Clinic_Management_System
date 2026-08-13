@@ -19,15 +19,15 @@ import { useAnalytics } from '../hooks/useAnalytics';
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-gray-900/95 backdrop-blur border border-white/10 rounded-xl p-3 shadow-2xl">
-        <p className="text-gray-400 text-xs font-medium mb-2">{label}</p>
+      <div className="bg-slate-900/95 backdrop-blur border border-white/10 rounded-xl p-3 shadow-2xl">
+        <p className="text-slate-400 text-xs font-medium mb-2">{label}</p>
         {payload.map((entry: any, i: number) => (
           <div key={i} className="flex items-center gap-2 text-sm">
             <span className="w-2 h-2 rounded-full" style={{ background: entry.color }} />
             <span className="text-gray-300 capitalize">{entry.name}:</span>
             <span className="text-white font-semibold">
               {typeof entry.value === 'number' && entry.name?.toLowerCase().includes('revenue')
-                ? `$${entry.value.toLocaleString()}`
+                ? `ETB ${entry.value.toLocaleString()}`
                 : entry.value.toLocaleString()}
             </span>
           </div>
@@ -90,17 +90,17 @@ const SectionHeader: React.FC<{ icon: React.ReactNode; title: string; subtitle: 
   icon, title, subtitle,
 }) => (
   <div className="flex items-center gap-3 mb-6">
-    <div className="p-2.5 bg-indigo-50 rounded-xl text-indigo-600">{icon}</div>
+    <div className="p-2.5 bg-sky-50 rounded-xl text-sky-500">{icon}</div>
     <div>
-      <h2 className="text-lg font-bold text-gray-900">{title}</h2>
-      <p className="text-sm text-gray-500">{subtitle}</p>
+      <h2 className="text-lg font-bold text-slate-800">{title}</h2>
+      <p className="text-sm text-slate-500">{subtitle}</p>
     </div>
   </div>
 );
 
 // ─── Chart Card ───────────────────────────────────────────────
 const ChartCard: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
-  <div className={`bg-white rounded-2xl p-6 shadow-sm border border-gray-100 ${className}`}>
+  <div className={`bg-white rounded-2xl p-6 shadow-sm border border-slate-100 ${className}`}>
     {children}
   </div>
 );
@@ -111,12 +111,12 @@ const SpecRow: React.FC<{ name: string; count: number; pct: number; color: strin
 }) => (
   <div className="flex items-center gap-3">
     <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: color }} />
-    <span className="text-sm text-gray-700 flex-1 truncate">{name}</span>
-    <span className="text-sm font-semibold text-gray-900 w-8 text-right">{count}</span>
-    <div className="w-28 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+    <span className="text-sm text-slate-700 flex-1 truncate">{name}</span>
+    <span className="text-sm font-semibold text-slate-800 w-8 text-right">{count}</span>
+    <div className="w-28 h-1.5 bg-slate-100 rounded-full overflow-hidden">
       <div className="h-full rounded-full transition-all duration-700" style={{ width: `${pct}%`, background: color }} />
     </div>
-    <span className="text-xs text-gray-400 w-8 text-right">{pct}%</span>
+    <span className="text-xs text-slate-400 w-8 text-right">{pct}%</span>
   </div>
 );
 
@@ -138,8 +138,8 @@ const AnalyticsPage: React.FC = () => {
           <div className="p-5 bg-red-50 rounded-full">
             <Lock size={40} className="text-red-400" />
           </div>
-          <h2 className="text-2xl font-bold text-gray-800">Access Restricted</h2>
-          <p className="text-gray-500 text-center max-w-sm">
+          <h2 className="text-2xl font-bold text-slate-700">Access Restricted</h2>
+          <p className="text-slate-500 text-center max-w-sm">
             Analytics are available to <strong>Admin</strong> and <strong>Doctor</strong> roles only.
           </p>
         </div>
@@ -186,25 +186,25 @@ const AnalyticsPage: React.FC = () => {
         {/* ── Page Header ─────────────────────────────────── */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
-            <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+            <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight">
               Analytics{' '}
-              <span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-sky-500 to-emerald-600 bg-clip-text text-transparent">
                 Dashboard
               </span>
             </h1>
-            <p className="text-gray-500 mt-1 text-sm">
+            <p className="text-slate-500 mt-1 text-sm">
               Real-time insights for NovaCare Clinic · Last updated: {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
             </p>
           </div>
 
           {/* Tab toggle */}
-          <div className="inline-flex items-center bg-gray-100 rounded-xl p-1 gap-1">
+          <div className="inline-flex items-center bg-slate-100 rounded-xl p-1 gap-1">
             <button
               onClick={() => setActiveTab('weekly')}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                 activeTab === 'weekly'
-                  ? 'bg-white text-indigo-600 shadow-sm'
-                  : 'text-gray-500 hover:text-gray-700'
+                  ? 'bg-white text-sky-500 shadow-sm'
+                  : 'text-slate-500 hover:text-slate-700'
               }`}
             >
               Weekly
@@ -213,8 +213,8 @@ const AnalyticsPage: React.FC = () => {
               onClick={() => setActiveTab('monthly')}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                 activeTab === 'monthly'
-                  ? 'bg-white text-indigo-600 shadow-sm'
-                  : 'text-gray-500 hover:text-gray-700'
+                  ? 'bg-white text-sky-500 shadow-sm'
+                  : 'text-slate-500 hover:text-slate-700'
               }`}
             >
               Monthly
@@ -244,8 +244,8 @@ const AnalyticsPage: React.FC = () => {
           />
           <SummaryCard
             title="Monthly Revenue"
-            value={`$${(summary?.monthlyRevenue ?? 0).toLocaleString()}`}
-            subtitle={`$${(summary?.totalRevenue ?? 0).toLocaleString()} lifetime`}
+            value={`ETB ${(summary?.monthlyRevenue ?? 0).toLocaleString()}`}
+            subtitle={`ETB ${(summary?.totalRevenue ?? 0).toLocaleString()} lifetime`}
             icon={<DollarSign size={22} />}
             trend={15.3}
             gradient="linear-gradient(135deg, #10b981 0%, #0ea5e9 100%)"
@@ -354,7 +354,7 @@ const AnalyticsPage: React.FC = () => {
                     if (active && payload?.length) {
                       const d = payload[0].payload;
                       return (
-                        <div className="bg-gray-900 text-white text-xs rounded-lg px-3 py-2 shadow-xl">
+                        <div className="bg-slate-900 text-white text-xs rounded-lg px-3 py-2 shadow-xl">
                           <p className="font-semibold">{d.specialization}</p>
                           <p className="text-gray-300">{d.count} doctors · {d.percentage}%</p>
                         </div>
@@ -429,7 +429,7 @@ const AnalyticsPage: React.FC = () => {
                       if (active && payload?.length) {
                         const d = payload[0].payload;
                         return (
-                          <div className="bg-gray-900 text-white text-xs rounded-lg px-3 py-2">
+                          <div className="bg-slate-900 text-white text-xs rounded-lg px-3 py-2">
                             <p className="font-semibold">{d.name}</p>
                             <p className="text-gray-300">{d.value}%</p>
                           </div>
@@ -450,9 +450,9 @@ const AnalyticsPage: React.FC = () => {
                   <div key={i} className="flex items-center justify-between text-sm">
                     <div className="flex items-center gap-2">
                       <span className="w-2.5 h-2.5 rounded-full" style={{ background: item.color }} />
-                      <span className="text-gray-600">{item.label}</span>
+                      <span className="text-slate-600">{item.label}</span>
                     </div>
-                    <span className="font-bold text-gray-900">{item.value}</span>
+                    <span className="font-bold text-slate-800">{item.value}</span>
                   </div>
                 ))}
               </div>
@@ -463,16 +463,16 @@ const AnalyticsPage: React.FC = () => {
         {/* ── Row 4: Quick Stats strip ─────────────────────── */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { label: 'Total Doctors', value: specializationBreakdown.reduce((a, b) => a + b.count, 0), icon: <Stethoscope size={18} />, color: 'text-indigo-600 bg-indigo-50' },
-            { label: 'Specializations', value: specializationBreakdown.length, icon: <PieIcon size={18} />, color: 'text-violet-600 bg-violet-50' },
+            { label: 'Total Doctors', value: specializationBreakdown.reduce((a, b) => a + b.count, 0), icon: <Stethoscope size={18} />, color: 'text-sky-500 bg-sky-50' },
+            { label: 'Specializations', value: specializationBreakdown.length, icon: <PieIcon size={18} />, color: 'text-sky-600 bg-violet-50' },
             { label: 'Avg. Daily Visits', value: summary.avgAppointmentsPerDay, icon: <Activity size={18} />, color: 'text-emerald-600 bg-emerald-50' },
             { label: 'Patient Growth', value: `+${summary.patientGrowthRate}%`, icon: <TrendingUp size={18} />, color: 'text-amber-600 bg-amber-50' },
           ].map((item, i) => (
-            <div key={i} className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 flex items-center gap-4">
+            <div key={i} className="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex items-center gap-4">
               <div className={`p-2.5 rounded-xl ${item.color}`}>{item.icon}</div>
               <div>
-                <p className="text-2xl font-extrabold text-gray-900">{item.value}</p>
-                <p className="text-xs text-gray-500 mt-0.5">{item.label}</p>
+                <p className="text-2xl font-extrabold text-slate-800">{item.value}</p>
+                <p className="text-xs text-slate-500 mt-0.5">{item.label}</p>
               </div>
             </div>
           ))}

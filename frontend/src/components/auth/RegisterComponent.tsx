@@ -47,10 +47,10 @@ function RegisterComponent() {
 
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4 py-12">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 to-sky-100 p-4 py-12">
       <Card className="w-full max-w-md shadow-xl border-0">
         <CardHeader className="space-y-1 flex flex-col items-center text-center">
-          <div className="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center mb-4 shadow-lg shadow-indigo-200">
+          <div className="w-12 h-12 bg-sky-500 rounded-xl flex items-center justify-center mb-4 shadow-lg shadow-sky-200">
             <span className="text-white font-bold text-xl">E</span>
           </div>
           <CardTitle className="text-2xl font-bold">Create an Account</CardTitle>
@@ -67,31 +67,31 @@ function RegisterComponent() {
             
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <label htmlFor="name" className="text-sm font-medium text-gray-700">Full Name</label>
-                <Input id="name" name="name" autoComplete="name" placeholder="John Doe" onChange={handleChange} required />
+                <label htmlFor="name" className="text-sm font-medium text-slate-700">Full Name</label>
+                <Input id="name" name="name" autoComplete="name" placeholder="Kebede Tessema" onChange={handleChange} required />
               </div>
               <div className="space-y-2">
-                <label htmlFor="phone" className="text-sm font-medium text-gray-700">Phone</label>
+                <label htmlFor="phone" className="text-sm font-medium text-slate-700">Phone</label>
                 <Input id="phone" name="phone" autoComplete="tel" placeholder="0911..." onChange={handleChange} required />
               </div>
             </div>
             
             <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium text-gray-700">Email Address</label>
-              <Input id="email" name="email" type="email" autoComplete="email" placeholder="john@example.com" onChange={handleChange} required />
+              <label htmlFor="email" className="text-sm font-medium text-slate-700">Email Address</label>
+              <Input id="email" name="email" type="email" autoComplete="email" placeholder="kebede@example.com" onChange={handleChange} required />
             </div>
             
             <div className="space-y-2">
-              <label htmlFor="password" className="text-sm font-medium text-gray-700">Password</label>
+              <label htmlFor="password" className="text-sm font-medium text-slate-700">Password</label>
               <Input id="password" name="password" type="password" autoComplete="new-password" placeholder="••••••••" onChange={handleChange} required />
             </div>
             {/* <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">I am a...</label>
+              <label className="text-sm font-medium text-slate-700">I am a...</label>
               <select 
                 name="role"
                 value={formData.role}
                 onChange={handleChange}
-                className="w-full h-10 px-3 rounded-md border border-gray-200 bg-white text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full h-10 px-3 rounded-md border border-slate-200 bg-white text-sm focus:ring-2 focus:ring-sky-400 outline-none"
               >
                 <option value="patient">Patient</option>
                 <option value="admin">Admin / Staff</option>
@@ -102,15 +102,15 @@ function RegisterComponent() {
           <CardFooter className="flex flex-col gap-4 mt-2">
             <Button 
               type="submit" 
-              className="w-full h-11 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-all shadow-md shadow-indigo-100"
+              className="w-full h-11 bg-sky-500 hover:bg-sky-600 text-white font-semibold rounded-lg transition-all shadow-md shadow-sky-100"
               disabled={isLoading}
             >
               {isLoading ? 'Creating account...' : 'Create Account'}
             </Button>
             
-            <p className="text-center text-sm text-gray-600">
+            <p className="text-center text-sm text-slate-600">
               Already have an account?{' '}
-              <Link to="/login" className="text-indigo-600 font-semibold hover:underline">
+              <Link to="/login" className="text-sky-500 font-semibold hover:underline">
                 Login here
               </Link>
             </p>

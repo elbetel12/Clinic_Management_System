@@ -1,10 +1,9 @@
 import React from "react"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import DashboardPage from "./pages/DashboardPage"
 import LoginPage from "./pages/LoginPage"
 import RegisterPage from "./pages/RegisterPage"
 import BookAppointmentPage from "./pages/BookAppointmentPage"
-import LandingPage from "./pages/LandingPage"
 import AnalyticsPage from "./pages/AnalyticsPage"
 import ProfilePage from "./pages/ProfilePage"
 import { ProtectedRoute } from "./components/shared/ProtectedRoute"
@@ -14,7 +13,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
         <Route path="/book" element={<ProtectedRoute><BookAppointmentPage /></ProtectedRoute>} />
         <Route path="/analytics" element={<ProtectedRoute allowedRoles={['admin', 'doctor']}><AnalyticsPage /></ProtectedRoute>} />
