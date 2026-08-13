@@ -3,12 +3,13 @@ import User from '../user/user.model';
 import bcrypt from 'bcrypt';
 import { CreateDoctorInput } from './doctor.types';
 import { UserRole } from '../user/user.type';
+import { AppError } from '../../utils/appError';
 
 export const createDoctorByAdmin = async (doctorData: { name: string; email: string; specialization: string; password?: string }) => {
     // 1. Create the User account first
     const existingUser = await User.findOne({ email: doctorData.email });
     if (existingUser) {
-        throw new Error('User with this email already exists');
+        throw new AppError('User with this email already exists',400);
     }
 
     const defaultPassword = doctorData.password || 'Doctor@123'; // Default password if not provided

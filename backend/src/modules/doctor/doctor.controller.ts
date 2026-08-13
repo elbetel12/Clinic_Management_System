@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { createDoctorByAdmin, getDoctors, updateDoctorProfile } from './doctor.service';
+import { AppError } from '../../utils/appError';
 
 export const createDoctorHandler = async (req: Request, res: Response) => {
   try {
@@ -13,10 +14,12 @@ export const createDoctorHandler = async (req: Request, res: Response) => {
       tempPassword: result.tempPassword // Admin can give this to the doctor
     });
   } catch (error: unknown) {
-    return res.status(500).json({
-      success: false,
-      message: error instanceof Error ? error.message : 'Internal server error',
-    });
+    if(error instanceof AppError) {
+        res.status(error.statusCode).json({ message: error.message });
+    }
+    else {
+        res.status(500).json({ message: 'Internal server error' });
+    }
   }
 };
 
@@ -53,9 +56,11 @@ export const updateDoctorProfileHandler = async (req: Request, res: Response) =>
       data: updatedDoctor
     });
   } catch (error: unknown) {
-    return res.status(500).json({
-      success: false,
-      message: error instanceof Error ? error.message : 'Internal server error',
-    });
+        if(error instanceof AppError) {
+            res.status(error.statusCode).json({ message: error.message });
+        }
+        else {
+            res.status(500).json({ message: 'Internal server error' });
+        }
   }
 };

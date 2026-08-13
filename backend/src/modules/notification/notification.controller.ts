@@ -1,6 +1,6 @@
 import { Request,Response } from "express";
 import { getNotifications,markAllNotificationsAsRead,markNotificationAsRead } from "./notification.service";
-
+import { AppError } from "../../utils/appError";
 
 export const getNotificationsHandler = async (req:Request,res:Response)=>{
       try {
@@ -11,19 +11,27 @@ export const getNotificationsHandler = async (req:Request,res:Response)=>{
            const notifications = await getNotifications(userId);
            res.status(200).json(notifications);
        } catch (error: Error | unknown) {
-           res.status(500).json({ message: error instanceof Error ? error.message : 'Internal server error' });
+              if(error instanceof AppError) {
+            res.status(error.statusCode).json({ message: error.message });
+        }
+        else {
+            res.status(500).json({ message: 'Internal server error' });
+        }
        }
 }
 
 export const markNotificationAsReadHandler = async (req:Request,res:Response) =>{
     try {
         const notificationId = req.params.notificationId as string
-        console.log("Marking notification as read:", notificationId);
         const notifications = await markNotificationAsRead(notificationId);
-        console.log('✅ Notification updated:', notifications);
         res.status(200).json(notifications)
     }catch (error: Error | unknown) {
-           res.status(500).json({ message: error instanceof Error ? error.message : 'Internal server error' });
+              if(error instanceof AppError) {
+            res.status(error.statusCode).json({ message: error.message });
+        }
+        else {
+            res.status(500).json({ message: 'Internal server error' });
+        }
        }
 }
 
@@ -36,6 +44,11 @@ export const markAllNotificationAsReadHandler = async (req:Request,res:Response)
         const result = await markAllNotificationsAsRead(userId);
         res.status(200).json({ message: 'All notifications marked as read', count: result.modifiedCount });
     } catch (error: Error | unknown) {
-        res.status(500).json({ message: error instanceof Error ? error.message : 'Internal server error' });
+              if(error instanceof AppError) {
+            res.status(error.statusCode).json({ message: error.message });
+        }
+        else {
+            res.status(500).json({ message: 'Internal server error' });
+        }
     }
 }
