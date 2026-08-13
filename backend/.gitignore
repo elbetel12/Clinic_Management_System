@@ -4,7 +4,7 @@ backend/node_modules/
 .env
 .env.local
 .env.*.local
-
+dist/
 npm-debug.log*
 yarn-error.log*
 yarn-debug.log*

@@ -4,7 +4,9 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "dev": "nodemon --exec npx ts-node --project tsconfig.json server.ts"
+      "dev": "nodemon --exec npx ts-node --project tsconfig.json server.ts",
+      "build": "tsc",
+      "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
