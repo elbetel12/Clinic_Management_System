@@ -10,7 +10,7 @@ export function ProtectedRoute({children,allowedRoles}:{children:React.ReactNode
     }
 
     if(isAuthenticated){
-        if(allowedRoles && !allowedRoles.includes(user?.role)){
+        if(allowedRoles && !allowedRoles.includes(user?.role as string)){
             return <div>Not authorized</div>;
         }
         return children;
