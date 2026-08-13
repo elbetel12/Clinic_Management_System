@@ -1,5 +1,7 @@
 # NovaCare 🏥
 
+**Live Demo:** [https://novacare-frontend.onrender.com](https://novacare-frontend.onrender.com)
+
 A modern, full-stack clinic management system designed to streamline appointment scheduling, doctor management, and real-time notification delivery across three user roles — **Admin**, **Doctor**, and **Patient**.
 
 > Built as a portfolio project to demonstrate production-grade backend architecture, real-time WebSocket integration, and role-based access control.
