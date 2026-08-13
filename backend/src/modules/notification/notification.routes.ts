@@ -4,7 +4,9 @@ import { getNotificationsHandler,markAllNotificationAsReadHandler,markNotificati
 
 const notificationRouter = Router();
 notificationRouter.get('/', authMiddleware, getNotificationsHandler);
+notificationRouter.patch('/read-all', authMiddleware, markAllNotificationAsReadHandler);
 notificationRouter.put('/read-all', authMiddleware, markAllNotificationAsReadHandler);
-notificationRouter.put('/:notificationId/read', authMiddleware,markNotificationAsReadHandler );
+notificationRouter.patch('/:notificationId/read', authMiddleware, markNotificationAsReadHandler);
+notificationRouter.put('/:notificationId/read', authMiddleware, markNotificationAsReadHandler);
 
 export default notificationRouter;
