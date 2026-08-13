@@ -5,5 +5,11 @@
     "moduleResolution": "Bundler",
     "types": ["vite/client"],
     "jsx": "react",
+    "skipLibCheck": true,
+    "noEmit": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "*": ["./*"]
+    }
   }
 }
