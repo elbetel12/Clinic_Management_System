@@ -3,7 +3,7 @@ import { Bell, CheckCheck, Clock } from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
 
 export function NotificationBell() {
-    const { unreadCount, markAllRead, notifications } = useNotification();
+    const { unreadCount, markAllRead, markAsRead, notifications } = useNotification();
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -57,29 +57,43 @@ export function NotificationBell() {
 
                     <div className="max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200">
                         {notifications.length > 0 ? (
-                            notifications.map((n) => (
-                                <div 
-                                    key={n.id} 
-                                    className={`p-4 border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors relative group ${!n.isRead ? 'bg-sky-50/30' : ''}`}
-                                >
-                                    {!n.isRead &&(
-                                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-sky-500 rounded-r-full" />
-                                    )}
-                                    <div className="flex flex-col gap-1">
-                                        <p className={`text-sm ${!n.isRead ? 'font-bold text-slate-800' : 'text-slate-600'}`}>
-                                            {n.title}
-                                        </p>
-                                        <div className={`w-2 h-2 rounded-full ${n.type === "success" ? 
-                                        "bg-green-500" : n.type === "error"   ? 
-                                        "bg-red-500"   : "bg-sky-400"}`} />
-                                        <div className="flex items-center gap-1.5 text-[11px] text-slate-400">
-                                            <Clock size={12} />
-                                            {n.time}
+                            notifications.map((n, index) => {
+                                const targetId = String(n.id || n._id || index);
+                                return (
+                                    <div 
+                                        key={targetId} 
+                                        onClick={() => {
+                                            if (!n.isRead && (n.id || n._id)) {
+                                                markAsRead(String(n.id || n._id));
+                                            }
+                                        }}
+                                        className={`p-4 border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors relative group cursor-pointer ${!n.isRead ? 'bg-sky-50/30' : ''}`}
+                                    >
+                                        {!n.isRead && (
+                                            <div className="absolute left-0 top-0 bottom-0 w-1 bg-sky-500 rounded-r-full" />
+                                        )}
+                                        <div className="flex flex-col gap-1">
+                                            <div className="flex items-center justify-between">
+                                                <p className={`text-sm ${!n.isRead ? 'font-bold text-slate-800' : 'text-slate-600'}`}>
+                                                    {n.title}
+                                                </p>
+                                                <div className={`w-2 h-2 rounded-full ${n.type === "success" ? 
+                                                "bg-emerald-500" : n.type === "error" ? 
+                                                "bg-red-500" : n.type === "warning" ? "bg-amber-500" : "bg-sky-400"}`} />
+                                            </div>
+                                            {n.message && (
+                                                <p className="text-xs text-slate-500 font-normal leading-relaxed">
+                                                    {n.message}
+                                                </p>
+                                            )}
+                                            <div className="flex items-center gap-1.5 text-[11px] text-slate-400 mt-1">
+                                                <Clock size={12} />
+                                                {n.time}
+                                            </div>
                                         </div>
-                                        
-                                       </div>
-                                </div>
-                            ))
+                                    </div>
+                                );
+                            })
                         ) : (
                             <div className="p-8 text-center">
                                 <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-3">

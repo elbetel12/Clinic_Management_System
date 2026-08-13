@@ -27,7 +27,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
             <span className="text-gray-300 capitalize">{entry.name}:</span>
             <span className="text-white font-semibold">
               {typeof entry.value === 'number' && entry.name?.toLowerCase().includes('revenue')
-                ? `$${entry.value.toLocaleString()}`
+                ? `ETB ${entry.value.toLocaleString()}`
                 : entry.value.toLocaleString()}
             </span>
           </div>
@@ -244,8 +244,8 @@ const AnalyticsPage: React.FC = () => {
           />
           <SummaryCard
             title="Monthly Revenue"
-            value={`$${(summary?.monthlyRevenue ?? 0).toLocaleString()}`}
-            subtitle={`$${(summary?.totalRevenue ?? 0).toLocaleString()} lifetime`}
+            value={`ETB ${(summary?.monthlyRevenue ?? 0).toLocaleString()}`}
+            subtitle={`ETB ${(summary?.totalRevenue ?? 0).toLocaleString()} lifetime`}
             icon={<DollarSign size={22} />}
             trend={15.3}
             gradient="linear-gradient(135deg, #10b981 0%, #0ea5e9 100%)"

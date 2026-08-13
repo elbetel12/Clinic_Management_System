@@ -6,10 +6,11 @@ export const fetchNotifications = async () => {
 }
 
 export const markNotificationAsRead = async (notificationId: string) => {
-    const response = await api.put(`/notifications/${notificationId}/read`);
+    const response = await api.patch(`/notifications/${notificationId}/read`);
     return response.data;
 }
+
 export const markAllNotificationsAsRead = async () => {
-    const response = await api.put('/notifications/read-all/');
+    const response = await api.patch('/notifications/read-all');
     return response.data;
 }
